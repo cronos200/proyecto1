@@ -1,19 +1,19 @@
-# Proyecto de Análisis de Datos
+# Proyecto de Análisis de Datos - Netflix
 
-Este proyecto utiliza Streamlit para la visualización de datos y MySQL como base de datos.
+Este proyecto utiliza **Streamlit** y **Pandas** para el análisis y visualización de datos de Netflix.
 
 ## Configuración del Entorno de Desarrollo
 
 ### 1. Crear un Entorno Virtual
 
-Primero, crea un entorno virtual para aislar las dependencias del proyecto. Abre una terminal y ejecuta:
+Primero, crea un entorno virtual para aislar las dependencias del proyecto. Abre una terminal (PowerShell) y ejecuta:
 
 ```powershell
 # Crear el entorno virtual
 python -m venv .venv
 
 # Activar el entorno virtual
-.\venv\Scripts\activate
+.\.venv\Scripts\Activate.ps1
 ```
 
 ### 2. Instalar Dependencias
@@ -26,12 +26,11 @@ pip install -r requirements.txt
 
 Este comando instalará todas las bibliotecas requeridas, incluyendo:
 
-- streamlit
-- mysql-connector-python
-- pandas
-- numpy
-- matplotlib
-- seaborn
+- **streamlit** - framework web interactivo
+- **pandas** - análisis y manipulación de datos
+- **numpy** - computación numérica
+- **matplotlib** y **seaborn** - visualización
+- **mysql-connector-python** - conexión a bases de datos
 - y otras dependencias necesarias
 
 ### 3. Ejecutar la Aplicación
@@ -39,26 +38,34 @@ Este comando instalará todas las bibliotecas requeridas, incluyendo:
 Para iniciar la aplicación Streamlit localmente, ejecuta:
 
 ```powershell
-streamlit run app_streamlit.py
+streamlit run incicio.py
 ```
 
 La aplicación se abrirá automáticamente en tu navegador predeterminado. Por defecto, la dirección será: `http://localhost:8501`
 
 ## Notas Importantes
 
-- Asegúrate de tener Python 3.8 o superior instalado en tu sistema.
+- Asegúrate de tener **Python 3.8 o superior** instalado en tu sistema.
+- El archivo CSV (`Datos_netflix.csv`) utiliza **`;` como separador** y **encoding `latin-1`**.
 - Mantén el entorno virtual activado mientras trabajas en el proyecto.
 - Si necesitas detener la aplicación, presiona `Ctrl+C` en la terminal.
-- Para desactivar el entorno virtual cuando termines, simplemente ejecuta `deactivate` en la terminal.
+- Para desactivar el entorno virtual cuando termines, ejecuta `deactivate` en la terminal.
 
 ## Estructura del Proyecto
 
 ```
-Proyecto1/
-├── app_streamlit.py      # Aplicación principal de Streamlit
-├── conexion_mysql.py     # Configuración de conexión a MySQL
-├── inicio.py            # Archivo de inicio
-├── requirements.txt     # Lista de dependencias
-├── data/               # Directorio para datos
-└── scripts/            # Directorio para scripts adicionales
+proyecto1/
+├── incicio.py              # Aplicación principal de Streamlit (punto de entrada)
+├── app_streamlit.py        # Archivo vacío (puede reutilizarse)
+├── conexion_mysql.py       # Configuración de conexión a MySQL
+├── requirements.txt        # Lista de dependencias del proyecto
+├── README.md               # Este archivo
+└── archivos_csv/
+    └── Datos_netflix.csv   # Dataset principal (48,868 registros)
 ```
+
+## Archivos Principales
+
+- **`incicio.py`**: Aplicación Streamlit que carga y visualiza los datos de Netflix en una tabla interactiva.
+- **`conexion_mysql.py`**: Módulo para gestionar conexiones a bases de datos MySQL.
+- **`Datos_netflix.csv`**: Dataset con información de sesiones, usuarios, películas y series de Netflix.
