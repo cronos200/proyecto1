@@ -55,16 +55,24 @@ La aplicación se abrirá automáticamente en tu navegador predeterminado. Por d
 
 ```
 proyecto1/
-├── inicio.py              # Aplicación principal de Streamlit (punto de entrada)
+├── Inicio.py               # Aplicación principal de Streamlit (punto de entrada)
 ├── conexion_mysql.py       # Configuración de conexión a MySQL
 ├── requirements.txt        # Lista de dependencias del proyecto
+├── .env                    # Variables de entorno
 ├── README.md               # Este archivo
-└── archivos_csv/
-    └── Datos_netflix.csv   # Dataset principal (48,868 registros)
+├── pages/
+│   ├── base_de_datos.py    # Módulo para gestionar datos de base de datos
+│   └── datos_csv.py        # Módulo para gestionar datos CSV
+├── static/
+│   └── Datos_netflix.csv   # Dataset principal (separador: `;`, encoding: `latin-1`)
+└── assets/
+    └── netflis.png         # Recurso de imagen
 ```
 
 ## Archivos Principales
 
-- **`incicio.py`**: Aplicación Streamlit que carga y visualiza los datos de Netflix en una tabla interactiva.
+- **`Inicio.py`**: Aplicación Streamlit que carga y visualiza los datos de Netflix en una tabla interactiva.
 - **`conexion_mysql.py`**: Módulo para gestionar conexiones a bases de datos MySQL.
-- **`Datos_netflix.csv`**: Dataset con información de sesiones, usuarios, películas y series de Netflix.
+- **`pages/base_de_datos.py`**: Módulo para gestionar operaciones con la base de datos.
+- **`pages/datos_csv.py`**: Módulo para gestionar operaciones con archivos CSV.
+- **`static/Datos_netflix.csv`**: Dataset con información de sesiones, usuarios, películas y series de Netflix.

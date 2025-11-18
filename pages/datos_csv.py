@@ -3,7 +3,7 @@ import streamlit as st
 
 st.title("Análisis de Datos con Streamlit y Pandas")
 
-CSV_PATH = 'archivos_csv/Datos_netflix.csv'
+CSV_PATH = 'static/Datos_netflix.csv'
 
 try:
 	# Probar distintas codificaciones comunes y elegir la que funcione
@@ -22,7 +22,7 @@ try:
 
 	st.success(f"Archivo cargado correctamente: {CSV_PATH} (encoding: {used_encoding})")
 	st.write(f"Filas: {df_netflix.shape[0]}, Columnas: {df_netflix.shape[1]}")
-	st.dataframe(df_netflix.head())
+	st.dataframe(df_netflix.head(10))
 except FileNotFoundError:
 	st.error(f"No se encontró el archivo: {CSV_PATH}")
 except Exception as e:
