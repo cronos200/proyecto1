@@ -38,7 +38,7 @@ Este comando instalará todas las bibliotecas requeridas, incluyendo:
 Para iniciar la aplicación Streamlit localmente, ejecuta:
 
 ```powershell
-streamlit run incicio.py
+streamlit run inicio.py
 ```
 
 La aplicación se abrirá automáticamente en tu navegador predeterminado. Por defecto, la dirección será: `http://localhost:8501`
@@ -55,8 +55,7 @@ La aplicación se abrirá automáticamente en tu navegador predeterminado. Por d
 
 ```
 proyecto1/
-├── incicio.py              # Aplicación principal de Streamlit (punto de entrada)
-├── app_streamlit.py        # Archivo vacío (puede reutilizarse)
+├── inicio.py              # Aplicación principal de Streamlit (punto de entrada)
 ├── conexion_mysql.py       # Configuración de conexión a MySQL
 ├── requirements.txt        # Lista de dependencias del proyecto
 ├── README.md               # Este archivo
