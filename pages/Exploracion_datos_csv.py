@@ -97,7 +97,7 @@ try:
 		st.code(codigo, language='python')
 		st.dataframe(filtro.head(15))
 	else:
-		st.warning("Las columnas 'porcentaje_progreso' e 'id_usuario' no están presentes en el DataFrame.")
+		st.warning("Las columnas 'porcentaje_progreso','id_usuario' y 'titulo' no están presentes en el DataFrame.")
 	
 except FileNotFoundError:
 	st.error(f"No se encontró el archivo: {RUTA_CSV}")
