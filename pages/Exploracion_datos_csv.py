@@ -71,6 +71,33 @@ try:
 		st.code(codigo,language='python')
 		st.dataframe(df_netflix.describe(include='all').T)
 
+	st.header('Porcentaje de progreso por usuario ')
+	if ('porcentaje_progreso' in df_netflix.columns and 'id_usuario' in df_netflix.columns) and 'titulo' in df_netflix.columns:
+		# Agrupar calculando la media de porcentaje_progreso y conservando títulos (lista corta de únicos)
+		progreso_por_usuario = df_netflix.groupby('id_usuario').agg({
+			'porcentaje_progreso': 'mean',
+			'titulo': lambda x: ', '.join(x.dropna().astype(str).unique()[:3])
+		}).reset_index()
+		progreso_por_usuario['porcentaje_progreso'] = progreso_por_usuario['porcentaje_progreso'].round(2)
+		
+		# Filtrar solo registros con porcentaje_progreso mayor a 60
+		filtro = progreso_por_usuario[progreso_por_usuario['porcentaje_progreso'] > 60]
+
+		codigo = """
+		st.header('Porcentaje de progreso por usuario ')
+		if 'porcentaje_progreso' in df_netflix.columns and 'id_usuario' in df_netflix.columns and 'titulo' in df_netflix.columns:
+			progreso_por_usuario = df_netflix.groupby('id_usuario').agg({
+				'porcentaje_progreso': 'mean',
+				'titulo': lambda x: ', '.join(x.dropna().astype(str).unique()[:3])
+			}).reset_index()
+			progreso_por_usuario['porcentaje_progreso'] = progreso_por_usuario['porcentaje_progreso'].round(2)
+			filtro = progreso_por_usuario[progreso_por_usuario['porcentaje_progreso'] > 60]
+			st.dataframe(filtro.head(15))
+		"""
+		st.code(codigo, language='python')
+		st.dataframe(filtro.head(15))
+	else:
+		st.warning("Las columnas 'porcentaje_progreso' e 'id_usuario' no están presentes en el DataFrame.")
 	
 except FileNotFoundError:
 	st.error(f"No se encontró el archivo: {RUTA_CSV}")
