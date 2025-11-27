@@ -1,5 +1,7 @@
 import pandas as pd
 import streamlit as st
+import matplotlib.pyplot as plt
+import seaborn as sbn
 from io import StringIO
 
 st.title("Análisis de Datos con Streamlit y Pandas")
@@ -26,26 +28,26 @@ try:
 
 
 
-	st.header("Exploración de múltiples archivos CSV")
-	subtabs = st.tabs(["Primeros 10 registros", "Últimos 10 registros", "Información", "Descripción"])
+	st.header("Exploración del archivo Datos_netflix.csv")
+	subtabs = st.tabs(["Primeros 30 registros", "Últimos 30 registros", "Información", "Descripción"])
 
 	with subtabs[0]:
 		codigo = """
-		st.subheader('Primeros 10 registros')
-		st.dataframe(df_netflix.head(10))
+		st.subheader('Primeros 30 registros')
+		st.dataframe(df_netflix.head(30))
 		"""
-		st.subheader('Primeros 10 registros')
+		st.subheader('Primeros 30 registros')
 		st.code(codigo, language='python')
-		st.dataframe(df_netflix.head(10))
+		st.dataframe(df_netflix.head(30))
 
 	with subtabs[1]:
 		codigo = """
-		st.subheader('Últimos 10 registros')
-		st.dataframe(df_netflix.tail(10))
+		st.subheader('Últimos 30 registros')
+		st.dataframe(df_netflix.tail(30))
 		"""
-		st.subheader('Últimos 10 registros')
+		st.subheader('Últimos 30 registros')
 		st.code(codigo, language='python')
-		st.dataframe(df_netflix.tail(10))
+		st.dataframe(df_netflix.tail(30))
 
 	with subtabs[2]:
 		code = """
@@ -99,6 +101,7 @@ try:
 	else:
 		st.warning("Las columnas 'porcentaje_progreso','id_usuario' y 'titulo' no están presentes en el DataFrame.")
 	
+
 except FileNotFoundError:
 	st.error(f"No se encontró el archivo: {RUTA_CSV}")
 except Exception as error:
