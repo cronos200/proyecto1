@@ -4,7 +4,7 @@ import base64
 # Configuración de la página
 st.set_page_config(
     page_title= 'Analisis de datos sobre Netflix',
-    page_icon="💻",
+    page_icon="🧠",
     layout="wide"
 )
 
