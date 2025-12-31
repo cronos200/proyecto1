@@ -98,6 +98,40 @@ try:
 		"""
 		st.code(codigo, language='python')
 		st.dataframe(filtro.head(15))
+
+		# 1. Configurar estilo visual para la gráfica (fondo blanco con rejilla)
+		sbn.set_style("whitegrid")
+		# 2. Crear figura y ejes (tamaño para que las etiquetas sean legibles)
+		fig, ax = plt.subplots(figsize=(12, 6))
+		# 3. Seleccionar los mejores usuarios (top 20 por porcentaje promedio)
+		top_20 = filtro.nlargest(20, 'porcentaje_progreso')
+		# Manejar el caso en que no hay datos suficientes para graficar
+		if top_20.empty:
+			st.info("No hay usuarios con porcentaje de progreso > 60% para mostrar el gráfico.")
+		else:
+			# 4. Crear el gráfico de barras con seaborn
+			sbn.barplot(
+    			data=top_20,                    # DataFrame a usar
+    			x='id_usuario',                 # Eje X: IDs de usuarios
+    			y='porcentaje_progreso',        # Eje Y: Porcentaje
+    			palette='viridis',              # Paleta de colores (azul-verde-amarillo)
+    			ax=ax                           # Ejes donde dibujar
+			)
+			# 5. Añadir línea de referencia (umbral), título y etiquetas
+			ax.axhline(y=60, color='red', linestyle='--', linewidth=2,
+				label='Umbral 60%', alpha=0.7)
+			ax.set_title("Top usuarios por porcentaje de progreso (media por usuario)")
+			ax.set_xlabel("ID de usuario")
+			ax.set_ylabel("Porcentaje de progreso (%)")
+			ax.legend()
+			# 6. Ajustar diseño: rotar etiquetas y ajustar layout
+			plt.xticks(rotation=45, ha='right')  # Rotar etiquetas 45° a la derecha
+			plt.tight_layout()                   # Ajustar para que no se corten elementos
+			# 7. Mostrar la figura en Streamlit y cerrar la figura para liberar memoria
+			st.pyplot(fig)
+			plt.close(fig)
+			# 8. Explicación breve en la interfaz sobre cómo se construyó la visualización
+			st.caption("Gráfico de barras: se agruparon los registros por `id_usuario`, se calculó la media de `porcentaje_progreso` y se mostraron los 20 usuarios con mayor promedio (solo usuarios con promedio > 60%). La línea roja indica el umbral del 60%.")
 	else:
 		st.warning("Las columnas 'porcentaje_progreso','id_usuario' y 'titulo' no están presentes en el DataFrame.")
 	
