@@ -99,40 +99,54 @@ try:
 		st.code(codigo, language='python')
 		st.dataframe(filtro.head(15))
 
-		# 1. Configurar estilo visual para la gráfica (fondo blanco con rejilla)
+		# --- INICIO DE LÍNEAS MODIFICADAS ---
+		
+		# 1. Configurar estilo visual general
 		sbn.set_style("whitegrid")
-		# 2. Crear figura y ejes (tamaño para que las etiquetas sean legibles)
-		fig, ax = plt.subplots(figsize=(12, 6))
-		# 3. Seleccionar los mejores usuarios (top 20 por porcentaje promedio)
-		top_20 = filtro.nlargest(20, 'porcentaje_progreso')
-		# Manejar el caso en que no hay datos suficientes para graficar
-		if top_20.empty:
-			st.info("No hay usuarios con porcentaje de progreso > 60% para mostrar el gráfico.")
-		else:
-			# 4. Crear el gráfico de barras con seaborn
-			sbn.barplot(
-    			data=top_20,                    # DataFrame a usar
-    			x='id_usuario',                 # Eje X: IDs de usuarios
-    			y='porcentaje_progreso',        # Eje Y: Porcentaje
-    			palette='viridis',              # Paleta de colores (azul-verde-amarillo)
-    			ax=ax                           # Ejes donde dibujar
-			)
-			# 5. Añadir línea de referencia (umbral), título y etiquetas
-			ax.axhline(y=60, color='red', linestyle='--', linewidth=2,
-				label='Umbral 60%', alpha=0.7)
-			ax.set_title("Top usuarios por porcentaje de progreso (media por usuario)")
-			ax.set_xlabel("ID de usuario")
-			ax.set_ylabel("Porcentaje de progreso (%)")
-			ax.legend()
-			# 6. Ajustar diseño: rotar etiquetas y ajustar layout
-			plt.xticks(rotation=45, ha='right')  # Rotar etiquetas 45° a la derecha
-			plt.tight_layout()                   # Ajustar para que no se corten elementos
-			# 7. Mostrar la figura en Streamlit y cerrar la figura para liberar memoria
-			st.pyplot(fig)
-			plt.close(fig)
-			# 8. Explicación breve en la interfaz sobre cómo se construyó la visualización
-			st.caption("Gráfico de barras: se agruparon los registros por `id_usuario`, se calculó la media de `porcentaje_progreso` y se mostraron los 20 usuarios con mayor promedio (solo usuarios con promedio > 60%). La línea roja indica el umbral del 60%.")
-	else:
+		st.divider()
+
+		# Creamos dos columnas para mostrar gráficas complementarias
+		grfica1, grafica2 = st.columns(2)
+
+		with grfica1:
+			st.subheader("Distribución del Compromiso")
+			# Histograma: Permite ver si la mayoría de usuarios termina lo que ve o lo deja al inicio
+			fig_dist, ax_dist = plt.subplots(figsize=(8, 5))
+			sbn.histplot(df_netflix['porcentaje_progreso'], bins=20, kde=True, color='teal', ax=ax_dist)
+			ax_dist.set_title("Frecuencia de avance en los títulos")
+			ax_dist.set_xlabel("Porcentaje de Progreso (%)")
+			ax_dist.set_ylabel("Cantidad de Visualizaciones")
+			st.pyplot(fig_dist)
+			plt.close(fig_dist)
+			st.caption("Esta gráfica muestra la distribución del progreso. Ayuda a identificar si el comportamiento común es ver el contenido completo o abandonarlo pronto.")
+
+		with grafica2:
+			st.subheader("Progreso Medio por Género")
+			# Gráfico de Barras por Categoría: Útil para saber qué géneros mantienen más tiempo al usuario
+			if 'genero_principal' in df_netflix.columns:
+				progreso_gen = df_netflix.groupby('genero_principal')['porcentaje_progreso'].mean().sort_values(ascending=False).reset_index()
+				fig_gen, ax_gen = plt.subplots(figsize=(8, 5))
+				sbn.barplot(data=progreso_gen, x='porcentaje_progreso', y='genero_principal', palette='viridis', ax=ax_gen)
+				ax_gen.set_title("Géneros con mayor retención")
+				ax_gen.set_xlabel("Progreso Promedio (%)")
+				ax_gen.set_ylabel("Género Principal")
+				st.pyplot(fig_gen)
+				plt.close(fig_gen)
+				st.caption("Se comparan los géneros según el porcentaje medio que los usuarios consumen antes de cerrar la sesión.")
+
+		# Visualización de Dispositivos (Opcional, muy acorde a los datos)
+		st.subheader("Análisis de consumo por Dispositivo")
+		if 'tipo_dispositivo' in df_netflix.columns:
+			fig_dev, ax_dev = plt.subplots(figsize=(10, 4))
+			sbn.boxplot(data=df_netflix, x='tipo_dispositivo', y='porcentaje_progreso', palette='Set2', ax=ax_dev)
+			ax_dev.set_title("Dispersión del progreso según el dispositivo utilizado")
+			ax_dev.set_xlabel("Dispositivo")
+			ax_dev.set_ylabel("Progreso (%)")
+			st.pyplot(fig_dev)
+			plt.close(fig_dev)
+			st.caption("El diagrama de caja (Boxplot) permite ver no solo el promedio, sino la variabilidad del progreso en diferentes dispositivos (Tablet, Smart TV, etc.).")
+
+		# --- FIN DE LÍNEAS MODIFICADAS ---
 		st.warning("Las columnas 'porcentaje_progreso','id_usuario' y 'titulo' no están presentes en el DataFrame.")
 	
 

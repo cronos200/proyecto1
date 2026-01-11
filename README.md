@@ -38,7 +38,7 @@ Este comando instalará todas las bibliotecas requeridas, incluyendo:
 Para iniciar la aplicación Streamlit localmente, ejecuta:
 
 ```powershell
-streamlit run inicio.py
+streamlit run Inicio.py
 ```
 
 La aplicación se abrirá automáticamente en tu navegador predeterminado. Por defecto, la dirección será: `http://localhost:8501`
