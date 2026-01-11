@@ -55,24 +55,25 @@ La aplicación se abrirá automáticamente en tu navegador predeterminado. Por d
 
 ```
 proyecto1/
-├── Inicio.py               # Aplicación principal de Streamlit (punto de entrada)
-├── conexion_mysql.py       # Configuración de conexión a MySQL
-├── requirements.txt        # Lista de dependencias del proyecto
-├── .env                    # Variables de entorno
-├── README.md               # Este archivo
+├── Inicio.py                      # Aplicación principal de Streamlit (punto de entrada)
+├── conexion_mysql.py              # Configuración de conexión a MySQL
+├── requirements.txt               # Lista de dependencias del proyecto
+├── README.md                      # Este archivo
 ├── pages/
-│   ├── base_de_datos.py    # Módulo para gestionar datos de base de datos
-│   └── datos_csv.py        # Módulo para gestionar datos CSV
+│   ├── base_de_datos.py          # Módulo para gestionar datos de base de datos
+│   ├── Exploracion_datos_csv.py  # Módulo para exploración y análisis de datos CSV
+│   └── pruevas.py                # Archivo para pruebas y experimentos
 ├── static/
-│   └── Datos_netflix.csv   # Dataset principal (separador: `;`, encoding: `latin-1`)
-└── assets/
-    └── netflis.png         # Recurso de imagen
+│   └── Datos_netflix.csv         # Dataset principal (separador: `;`, encoding: `latin-1`)
+└── assets/                       # Directorio para recursos de la aplicación
 ```
 
 ## Archivos Principales
 
-- **`Inicio.py`**: Aplicación Streamlit que carga y visualiza los datos de Netflix en una tabla interactiva.
-- **`conexion_mysql.py`**: Módulo para gestionar conexiones a bases de datos MySQL.
-- **`pages/base_de_datos.py`**: Módulo para gestionar operaciones con la base de datos.
-- **`pages/datos_csv.py`**: Módulo para gestionar operaciones con archivos CSV.
-- **`static/Datos_netflix.csv`**: Dataset con información de sesiones, usuarios, películas y series de Netflix.
+- **`Inicio.py`**: Aplicación principal de Streamlit que carga y visualiza los datos de Netflix en una tabla interactiva (punto de entrada de la aplicación).
+- **`conexion_mysql.py`**: Módulo para gestionar conexiones a bases de datos MySQL, permitiendo la extracción y manipulación de datos desde la base de datos.
+- **`requirements.txt`**: Archivo que lista todas las dependencias del proyecto necesarias para su correcto funcionamiento.
+- **`pages/base_de_datos.py`**: Módulo para gestionar operaciones con la base de datos, incluyendo consultas y actualización de datos.
+- **`pages/Exploracion_datos_csv.py`**: Módulo especializado en la exploración y análisis exploratorio de datos desde archivos CSV.
+- **`pages/pruevas.py`**: Archivo destinado a pruebas, experimentación y desarrollo de nuevas funcionalidades.
+- **`static/Datos_netflix.csv`**: Dataset principal con información de películas y series de Netflix (separador: `;`, encoding: `latin-1`).
